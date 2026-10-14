@@ -1,0 +1,40 @@
+Create table if not exists clientes(
+    id_cliente INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    apellido TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    telefono TEXT,
+    direccion_entrega TEXT NOT NULL,
+    fecha_registro TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS restaurantes (
+    id_restaurante INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    tipo_cocina TEXT,
+    direccion TEXT NOT NULL,
+    telefono TEXT,
+    calificacion_promedio REAL DEFAULT 0.0
+);
+
+CREATE TABLE IF NOT EXISTS repartidores (
+    id_repartidor INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    apellido TEXT NOT NULL,
+    tipo_vehiculo TEXT,
+    place TEXT UNIQUE,
+    estado TEXT DEFAULT 'disponible'
+);
+
+CREATE TABLE IF NOT EXISTS pedidos(
+    id_pedido INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_cliente INTEGER NOT NULL,
+    id_restaurante INTEGER NOT NULL,
+    id_repartidor INTEGER,
+    fecha_pedido TEXT DEFAULT CURRENT_TIMESTAMP,
+    estado TEXT DEFAULT 'pediente',
+    total REAL NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente),
+    FOREIGN KEY (id_restaurante) REFERENCES restaurantes(id_restaurante),
+    FOREIGN KEY (id_repartidor) REFERENCES repartidores(id_repartidor)
+);
